@@ -1,0 +1,108 @@
+# created by fftool
+# modified by Tom
+units real
+boundary p p p
+
+
+# can combine various styles with the hybrid command
+atom_style full
+bond_style harmonic
+angle_style hybrid harmonic cosine/squared
+dihedral_style hybrid harmonic opls
+improper_style umbrella
+special_bonds lj/coul 0.0 0.0 0.5
+
+# LJ cutoff of 15 Angstroms
+pair_style hybrid lj/cut/coul/long 15.0 15.0
+kspace_style pppm 1.0e-5
+
+# read parameters
+# bonds, angles, dihedrals
+read_data data-p.lmp extra/special/per/atom 9
+# LJ and drudes
+include combined-pair-coeffs-rerun_1.lmp
+
+#######################################
+# Work of adhesion adjustments
+
+# everything is already in the right place
+# no drude particles in case 6!
+
+# alpha between IL and graphene is set to zero in the combined-pair-coeffs.lmp file (by setting the pair style to lj/cut/coul/long and to save computational time)
+# the epsilon values between IL and graphene are scaled linearly across all investigated stages, as can be seen in the combined-pair-coeffs*.lmp file
+
+#######################################
+
+# some important fixes and groups
+# convenient atom groups (for shake, thermostats...)
+group gATOMS type 2 3 4 5 6 7 8 9 10 11
+group gGRAPHENE type 2
+group gFROZEN type 1
+group gIL type 3 4 5 6 7 8 9 10 11
+# freeze the two bottom graphene layers 
+fix fFREEZE gFROZEN setforce 0.0 0.0 0.0 
+
+# debug
+# info coeffs
+
+# neighbor list
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes 
+neigh_modify one 10000 # increase max number of neighbors per atom
+
+reset_timestep 0
+
+#######################################
+# MD settings
+
+timestep 1.0
+variable vTK equal 425.0
+variable vTDRUDE equal 1.0
+
+# ring atoms at imidazole dont move
+fix fSHAKE gATOMS shake 0.0001 20 0 b 7 8 9
+# repulsive wall in z direction to prevent IL from evaporating
+fix fWALL gIL wall/harmonic zhi 120.0 20.0 3.52 10 units box pbc yes
+# no linear momentum
+fix fMOM_G gGRAPHENE momentum 100 linear 1 1 1
+fix fMOM_IL gIL momentum 100 linear 1 1 1
+
+# store velocity information of ghost atoms, needed for tgnvt/drude
+comm_modify vel yes
+
+# output
+thermo_style custom step temp press vol density pe ke etotal
+thermo 1000
+
+# drude temperature data
+compute cTGRAPHENE gGRAPHENE temp
+compute cTIL gIL temp
+thermo_style custom step temp press vol density pe ke etotal c_cTGRAPHENE c_cTIL
+
+#######################################
+# Production
+
+# calculate the interaction energy between IL and graphene in kcal/mol
+compute cEINT gGRAPHENE group/group gIL kspace yes
+variable vEINT equal c_cEINT # we do not need the factor 1/2 here
+# also calculate the liquid-liquid contribution
+compute cLL gIL pe/atom pair kspace
+compute cLL_SUM gIL reduce sum c_cLL
+variable vLL equal c_cLL_SUM
+# output 
+thermo_style custom step temp press vol density pe ke etotal c_cTGRAPHENE c_cTIL v_vEINT v_vLL
+fix fPRINT all print 500 "${vEINT} ${vLL}" file e_disp_1.dat screen no
+
+# rerun
+rerun traj.lammpstrj dump x y z
+
+#######################################
+# done
+
+unfix fPRINT
+unfix fMOM_IL
+unfix fMOM_G
+unfix fWALL
+unfix fFREEZE
+unfix fSHAKE
+

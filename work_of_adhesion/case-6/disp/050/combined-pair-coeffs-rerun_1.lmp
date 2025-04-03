@@ -1,0 +1,57 @@
+pair_coeff    1    *     none
+pair_coeff    1    2     lj/cut/coul/long   0.500000     3.456700  # CB CG Tom
+pair_coeff 2 2 lj/cut/coul/long 0.095000 3.456700 # CG CG
+pair_coeff 2 3 lj/cut/coul/long 0.143552 3.386975 # CG B Tom
+pair_coeff 2 4 lj/cut/coul/long 0.154433 2.783915 # CG FB Tom
+pair_coeff 2 5 lj/cut/coul/long 0.125966 3.199695 # CG NA Tom
+pair_coeff 2 6 lj/cut/coul/long 0.116008 3.088775 # CG CR Tom
+pair_coeff 2 7 lj/cut/coul/long 0.116008 3.088775 # CG CW Tom
+pair_coeff 2 8 lj/cut/coul/long 0.050067 3.299400 # CG C1 Tom
+pair_coeff 2 9 lj/cut/coul/long 0.022691 2.613750 # CG HCR Tom
+pair_coeff 2 10 lj/cut/coul/long 0.022691 2.613750 # CG HCW Tom
+pair_coeff 2 11 lj/cut/coul/long 0.022691 2.613750 # CG H1 Tom
+pair_coeff 3 3 lj/cut/coul/long 0.095005 3.580000 # B B
+pair_coeff 3 4 lj/cut/coul/long 0.076123 3.342095 # B FB
+pair_coeff 3 5 lj/cut/coul/long 0.127086 3.411012 # B NA
+pair_coeff 3 6 lj/cut/coul/long 0.081550 3.564968 # B CR
+pair_coeff 3 7 lj/cut/coul/long 0.081550 3.564968 # B CW
+pair_coeff 3 8 lj/cut/coul/long 0.079185 3.539774 # B C1
+pair_coeff 3 9 lj/cut/coul/long 0.053387 2.943399 # B HCR
+pair_coeff 3 10 lj/cut/coul/long 0.053387 2.943399 # B HCW
+pair_coeff 3 11 lj/cut/coul/long 0.053387 2.991655 # B H1
+pair_coeff 4 4 lj/cut/coul/long 0.060994 3.120000 # FB FB
+pair_coeff 4 5 lj/cut/coul/long 0.101828 3.184337 # FB NA
+pair_coeff 4 6 lj/cut/coul/long 0.065342 3.328062 # FB CR
+pair_coeff 4 7 lj/cut/coul/long 0.065342 3.328062 # FB CW
+pair_coeff 4 8 lj/cut/coul/long 0.063447 3.304542 # FB C1
+pair_coeff 4 9 lj/cut/coul/long 0.042776 2.747799 # FB HCR
+pair_coeff 4 10 lj/cut/coul/long 0.042776 2.747799 # FB HCW
+pair_coeff 4 11 lj/cut/coul/long 0.042776 2.792848 # FB H1
+pair_coeff 5 5 lj/cut/coul/long 0.170000 3.250000 # NA NA
+pair_coeff 5 6 lj/cut/coul/long 0.109087 3.396690 # NA CR
+pair_coeff 5 7 lj/cut/coul/long 0.109087 3.396690 # NA CW
+pair_coeff 5 8 lj/cut/coul/long 0.105924 3.372684 # NA C1
+pair_coeff 5 9 lj/cut/coul/long 0.071414 2.804461 # NA HCR
+pair_coeff 5 10 lj/cut/coul/long 0.071414 2.804461 # NA HCW
+pair_coeff 5 11 lj/cut/coul/long 0.071414 2.850439 # NA H1
+pair_coeff 6 6 lj/cut/coul/long 0.070000 3.550000 # CR CR
+pair_coeff 6 7 lj/cut/coul/long 0.070000 3.550000 # CR CW
+pair_coeff 6 8 lj/cut/coul/long 0.067970 3.524911 # CR C1
+pair_coeff 6 9 lj/cut/coul/long 0.045826 2.931041 # CR HCR
+pair_coeff 6 10 lj/cut/coul/long 0.045826 2.931041 # CR HCW
+pair_coeff 6 11 lj/cut/coul/long 0.045826 2.979094 # CR H1
+pair_coeff 7 7 lj/cut/coul/long 0.070000 3.550000 # CW CW
+pair_coeff 7 8 lj/cut/coul/long 0.067970 3.524911 # CW C1
+pair_coeff 7 9 lj/cut/coul/long 0.045826 2.931041 # CW HCR
+pair_coeff 7 10 lj/cut/coul/long 0.045826 2.931041 # CW HCW
+pair_coeff 7 11 lj/cut/coul/long 0.045826 2.979094 # CW H1
+pair_coeff 8 8 lj/cut/coul/long 0.065999 3.500000 # C1 C1
+pair_coeff 8 9 lj/cut/coul/long 0.044497 2.910326 # C1 HCR
+pair_coeff 8 10 lj/cut/coul/long 0.044497 2.910326 # C1 HCW
+pair_coeff 8 11 lj/cut/coul/long 0.044497 2.958040 # C1 H1
+pair_coeff 9 9 lj/cut/coul/long 0.030000 2.420000 # HCR HCR
+pair_coeff 9 10 lj/cut/coul/long 0.030000 2.420000 # HCR HCW
+pair_coeff 9 11 lj/cut/coul/long 0.030000 2.459675 # HCR H1
+pair_coeff 10 10 lj/cut/coul/long 0.030000 2.420000 # HCW HCW
+pair_coeff 10 11 lj/cut/coul/long 0.030000 2.459675 # HCW H1
+pair_coeff 11 11 lj/cut/coul/long 0.030000 2.500000 # H1 H1

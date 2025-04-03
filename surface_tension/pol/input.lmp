@@ -1,0 +1,122 @@
+# created by fftool
+# modified by Tom
+units real
+boundary p p p
+
+# can combine various styles with the hybrid command
+atom_style full
+bond_style harmonic
+angle_style harmonic
+dihedral_style opls
+special_bonds lj/coul 0.0 0.0 0.5
+
+# LJ cutoff of 15 Angstroms
+pair_style hybrid/overlay lj/cut/coul/long 15.0 15.0 coul/long/cs 15.0 thole 2.600 15.0
+pair_modify tail yes
+kspace_style pppm 1.0e-5
+
+# read parameters
+# bonds, angles, dihedrals
+read_data data.after-prod.lmp extra/special/per/atom 9
+# LJ and drudes
+include pair-sc.lmp
+include pair-drude.lmp
+
+#######################################
+
+# some important fixes and groups
+# convenient atom groups (for shake, thermostats...)
+group gATOMS type 1 2 3 4 5 6 7 8 9
+group gCORES type 1 2 3 4 5 6
+group gDRUDES type 10 11 12 13 14 15
+
+# identify each atom type: [C]ore, [D]rude, [N]on-polarizable
+fix fDRUDE all drude C C C C C C N N N D D D D D D
+
+# debug
+# info coeffs
+
+# neighbor list
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes 
+neigh_modify one 10000 # increase max number of neighbors per atom
+
+reset_timestep 0
+
+#######################################
+# MD settings
+
+fix fSHAKE gATOMS shake 0.0001 20 0 b 6 7 8
+fix fMOM all momentum 100 linear 1 1 1
+
+timestep 1.0
+
+variable TK equal 425.0
+variable TDRUDE equal 1.0
+
+velocity gATOMS create ${TK} 11111
+velocity gDRUDES create ${TDRUDE} 22221
+# store velocity information of ghost atoms
+comm_modify vel yes
+
+compute cTIL all temp/drude
+# output
+thermo_style custom step pe ke etotal temp press vol density c_cTIL[1] c_cTIL[2]
+thermo 1000
+
+#######################################
+# Equilibration
+
+# thermostat, TGNH
+fix fNVT all tgnvt/drude temp ${TK} ${TK} $(100*dt) ${TDRUDE} $(20*dt)
+
+# trajectory
+dump dEQUI all custom 1000 equi.lammpstrj id type element xu yu zu
+dump_modify dEQUI element B F N C C C H H H D D D D D D sort id
+
+# run 2 ns
+run 2000000
+
+write_restart after-equi.restart
+undump dEQUI
+#######################################
+# Production
+
+# compute pressure
+compute cTEMP all temp
+compute cPRESS all pressure cTEMP
+
+thermo_style custom step pe ke etotal temp press vol density c_cTIL[1] c_cTIL[2]
+thermo 500
+
+# output the pressure tensor
+variable s equal step
+variable vPRESS_1 equal c_cPRESS[1]
+variable vPRESS_2 equal c_cPRESS[2]
+variable vPRESS_3 equal c_cPRESS[3]
+variable vPRESS_4 equal c_cPRESS[4]
+variable vPRESS_5 equal c_cPRESS[5]
+variable vPRESS_6 equal c_cPRESS[6]
+fix fPRINT all print 500 "${s} ${vPRESS_1} ${vPRESS_2} ${vPRESS_3} ${vPRESS_4} ${vPRESS_5} ${vPRESS_6}" file press.dat screen no
+
+# trajectory
+dump dTRAJ all custom 1000 prod.lammpstrj id type element xu yu zu
+dump_modify dTRAJ element B F N C C C H H H D D D D D D sort id
+
+# run 3 ns
+run 3000000
+
+# done
+write_restart after-prod.restart
+
+#######################################
+undump dTRAJ
+unfix fPRINT
+uncompute cPRESS
+uncompute cTEMP
+unfix fNVT
+uncompute cTIL
+unfix fMOM
+unfix fSHAKE
+unfix fDRUDE
+

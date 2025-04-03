@@ -1,0 +1,115 @@
+pair_coeff 1   *   none    
+pair_coeff 2*  12* lj/cut/coul/long  0.0 0.0  
+pair_coeff 1 2 lj/cut/coul/long 0.5 3.4567
+pair_coeff 2 2 lj/cut/coul/long 0.095 3.4567
+pair_coeff 2 3 lj/cut/coul/long 0.051638 3.058410
+pair_coeff 2 4 lj/cut/coul/long 0.061660 3.015460
+pair_coeff 2 5 lj/cut/coul/long 0.117630 3.105245
+pair_coeff 2 6 lj/cut/coul/long 0.062616 2.989230
+pair_coeff 2 7 lj/cut/coul/long 0.062616 2.989230
+pair_coeff 2 8 lj/cut/coul/long 0.027454 3.638900
+pair_coeff 2 9 lj/cut/coul/long 0.023622 2.597300
+pair_coeff 2 10 lj/cut/coul/long 0.023622 2.597300
+pair_coeff 2 11 lj/cut/coul/long 0.023622 2.597300
+pair_coeff 3 3 lj/cut/thole/long 0.095005 3.5263 0.578 2.600
+pair_coeff 3 4 lj/cut/thole/long 0.076123 3.291964 0.601 2.600
+pair_coeff 3 5 lj/cut/thole/long 0.060902 3.359847 0.836 2.600
+pair_coeff 3 6 lj/cut/thole/long 0.039081 3.511493 0.914 2.600
+pair_coeff 3 7 lj/cut/thole/long 0.039081 3.511493 0.914 2.600
+pair_coeff 3 8 lj/cut/thole/long 0.037947 3.486677 1.071 2.600
+pair_coeff 3 9 lj/cut/coul/long 0.025584 2.899248
+pair_coeff 3 10 lj/cut/coul/long 0.025584 2.899248
+pair_coeff 3 11 lj/cut/coul/long 0.025584 2.94678
+pair_coeff 3 12 lj/cut/thole/long 0.0 0.0 0.578 2.600
+pair_coeff 3 13 lj/cut/thole/long 0.0 0.0 0.601 2.600
+pair_coeff 3 14 lj/cut/thole/long 0.0 0.0 0.836 2.600
+pair_coeff 3 15 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 3 16 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 3 17 lj/cut/thole/long 0.0 0.0 1.071 2.600
+pair_coeff 4 4 lj/cut/thole/long 0.060994 3.0732 0.625 2.600
+pair_coeff 4 5 lj/cut/thole/long 0.048798 3.136572 0.869 2.600
+pair_coeff 4 6 lj/cut/thole/long 0.031313 3.278141 0.950 2.600
+pair_coeff 4 7 lj/cut/thole/long 0.031313 3.278141 0.950 2.600
+pair_coeff 4 8 lj/cut/thole/long 0.030405 3.254974 1.114 2.600
+pair_coeff 4 9 lj/cut/coul/long 0.020499 2.706582
+pair_coeff 4 10 lj/cut/coul/long 0.020499 2.706582
+pair_coeff 4 11 lj/cut/coul/long 0.020499 2.750955
+pair_coeff 4 12 lj/cut/thole/long 0.0 0.0 0.601 2.600
+pair_coeff 4 13 lj/cut/thole/long 0.0 0.0 0.625 2.600
+pair_coeff 4 14 lj/cut/thole/long 0.0 0.0 0.869 2.600
+pair_coeff 4 15 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 4 16 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 4 17 lj/cut/thole/long 0.0 0.0 1.114 2.600
+pair_coeff 5 5 lj/cut/thole/long 0.17 3.20125 1.208 2.600
+pair_coeff 5 6 lj/cut/thole/long 0.109087 3.34574 1.321 2.600
+pair_coeff 5 7 lj/cut/thole/long 0.109087 3.34574 1.321 2.600
+pair_coeff 5 8 lj/cut/thole/long 0.105924 3.322094 1.549 2.600
+pair_coeff 5 9 lj/cut/coul/long 0.071414 2.762394
+pair_coeff 5 10 lj/cut/coul/long 0.071414 2.762394
+pair_coeff 5 11 lj/cut/coul/long 0.071414 2.807682
+pair_coeff 5 12 lj/cut/thole/long 0.0 0.0 0.836 2.600
+pair_coeff 5 13 lj/cut/thole/long 0.0 0.0 0.869 2.600
+pair_coeff 5 14 lj/cut/thole/long 0.0 0.0 1.208 2.600
+pair_coeff 5 15 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 5 16 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 5 17 lj/cut/thole/long 0.0 0.0 1.549 2.600
+pair_coeff 6 6 lj/cut/thole/long 0.07 3.49675 1.445 2.600
+pair_coeff 6 7 lj/cut/thole/long 0.07 3.49675 1.445 2.600
+pair_coeff 6 8 lj/cut/thole/long 0.06797 3.472037 1.694 2.600
+pair_coeff 6 9 lj/cut/coul/long 0.045826 2.887075
+pair_coeff 6 10 lj/cut/coul/long 0.045826 2.887075
+pair_coeff 6 11 lj/cut/coul/long 0.045826 2.934408
+pair_coeff 6 12 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 6 13 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 6 14 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 6 15 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 6 16 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 6 17 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 7 7 lj/cut/thole/long 0.07 3.49675 1.445 2.600
+pair_coeff 7 8 lj/cut/thole/long 0.06797 3.472037 1.694 2.600
+pair_coeff 7 9 lj/cut/coul/long 0.045826 2.887075
+pair_coeff 7 10 lj/cut/coul/long 0.045826 2.887075
+pair_coeff 7 11 lj/cut/coul/long 0.045826 2.934408
+pair_coeff 7 12 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 7 13 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 7 14 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 7 15 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 7 16 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 7 17 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 8 8 lj/cut/thole/long 0.065999 3.4475 1.985 2.600
+pair_coeff 8 9 lj/cut/coul/long 0.044497 2.866671
+pair_coeff 8 10 lj/cut/coul/long 0.044497 2.866671
+pair_coeff 8 11 lj/cut/coul/long 0.044497 2.913669
+pair_coeff 8 12 lj/cut/thole/long 0.0 0.0 1.071 2.600
+pair_coeff 8 13 lj/cut/thole/long 0.0 0.0 1.114 2.600
+pair_coeff 8 14 lj/cut/thole/long 0.0 0.0 1.549 2.600
+pair_coeff 8 15 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 8 16 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 8 17 lj/cut/thole/long 0.0 0.0 1.985 2.600
+pair_coeff 9 9 lj/cut/coul/long 0.03 2.3837
+pair_coeff 9 10 lj/cut/coul/long 0.03 2.3837
+pair_coeff 9 11 lj/cut/coul/long 0.03 2.42278
+pair_coeff 10 10 lj/cut/coul/long 0.03 2.3837
+pair_coeff 10 11 lj/cut/coul/long 0.03 2.42278
+pair_coeff 11 11 lj/cut/coul/long 0.03 2.4625
+pair_coeff 12 12 lj/cut/thole/long 0.0 0.0 0.578 2.600
+pair_coeff 12 13 lj/cut/thole/long 0.0 0.0 0.601 2.600
+pair_coeff 12 14 lj/cut/thole/long 0.0 0.0 0.836 2.600
+pair_coeff 12 15 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 12 16 lj/cut/thole/long 0.0 0.0 0.914 2.600
+pair_coeff 12 17 lj/cut/thole/long 0.0 0.0 1.071 2.600
+pair_coeff 13 13 lj/cut/thole/long 0.0 0.0 0.625 2.600
+pair_coeff 13 14 lj/cut/thole/long 0.0 0.0 0.869 2.600
+pair_coeff 13 15 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 13 16 lj/cut/thole/long 0.0 0.0 0.950 2.600
+pair_coeff 13 17 lj/cut/thole/long 0.0 0.0 1.114 2.600
+pair_coeff 14 14 lj/cut/thole/long 0.0 0.0 1.208 2.600
+pair_coeff 14 15 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 14 16 lj/cut/thole/long 0.0 0.0 1.321 2.600
+pair_coeff 14 17 lj/cut/thole/long 0.0 0.0 1.549 2.600
+pair_coeff 15 15 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 15 16 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 15 17 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 16 16 lj/cut/thole/long 0.0 0.0 1.445 2.600
+pair_coeff 16 17 lj/cut/thole/long 0.0 0.0 1.694 2.600
+pair_coeff 17 17 lj/cut/thole/long 0.0 0.0 1.985 2.600

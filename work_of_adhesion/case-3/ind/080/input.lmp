@@ -1,0 +1,144 @@
+# created by fftool
+# modified by Tom
+units real
+boundary p p p
+
+# Work of adhesion adjustments
+variable vLAMBDA equal 0.800000          # scaling factor for the work of adhesion
+
+# can combine various styles with the hybrid command
+atom_style full
+bond_style harmonic
+angle_style hybrid harmonic cosine/squared
+dihedral_style hybrid harmonic opls
+improper_style umbrella
+special_bonds lj/coul 0.0 0.0 0.5
+
+# LJ cutoff of 15 Angstroms
+pair_style hybrid lj/cut/coul/long 15.0 15.0 lj/cut/thole/long 2.6 15.0 15.0
+kspace_style pppm 1.0e-5
+
+# read parameters
+# bonds, angles, dihedrals
+read_data data-p.lmp extra/special/per/atom 9
+# LJ and drudes
+include combined-pair-coeffs.lmp
+
+#######################################
+# Work of adhesion adjustments
+
+# scale the charges of the Drude cores and particles of graphene
+variable vQ2 equal 0.000000+1.852040*${vLAMBDA} # CG DC
+variable vQ12 equal -1.852040*${vLAMBDA} # CG DP
+
+# set charges accordingly
+set type 2 charge ${vQ2}
+set type 12 charge ${vQ12}
+
+# alpha is adjusted in the combined-pair-coeffs.lmp file, using a python script
+
+#######################################
+
+# some important fixes and groups
+# convenient atom groups (for shake, thermostats...)
+group gATOMS type 2 3 4 5 6 7 8 9 10 11
+group gCORES type 2 3 4 5 6 7 8
+group gDRUDES type 12 13 14 15 16 17 18
+group gGRAPHENE type 2 12
+group gGRAPHENE_CORES type 2
+group gGRAPHENE_DRUDES type 12
+group gFROZEN type 1
+group gIL type 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18
+group gIL_DRUDES type 13 14 15 16 17 18
+group gIL_ATOMS type 3 4 5 6 7 8 9 10 11
+# identify each atom type: [C]ore, [D]rude, [N]on-polarizable
+fix fDRUDE all drude N C C C C C C C N N N D D D D D D D
+# freeze the two bottom graphene layers 
+fix fFREEZE gFROZEN setforce 0.0 0.0 0.0 
+
+# debug
+# info coeffs
+
+# neighbor list
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes 
+neigh_modify one 10000 # increase max number of neighbors per atom
+
+#######################################
+# MD settings
+
+timestep 1.0
+variable vTK equal 425.0
+variable vTDRUDE equal 1.0
+
+# ring atoms at imidazole dont move
+fix fSHAKE gATOMS shake 0.0001 20 0 b 7 8 9
+# repulsive wall in z direction to prevent IL from evaporating
+fix fWALL gIL wall/harmonic zhi 120.0 20.0 3.52 10 units box pbc yes
+# no linear momentum
+fix fMOM_G gGRAPHENE momentum 100 linear 1 1 1
+fix fMOM_IL gIL momentum 100 linear 1 1 1
+
+# store velocity information of ghost atoms, needed for tgnvt/drude
+comm_modify vel yes
+
+# output
+thermo_style custom step temp press vol density pe ke etotal
+thermo 1000
+
+# drude temperature data
+compute cTGRAPHENE gGRAPHENE temp/drude
+compute cTIL gIL temp/drude
+thermo_style custom step temp press vol density pe ke etotal c_cTGRAPHENE[1] c_cTGRAPHENE[2] c_cTIL[1] c_cTIL[2]
+
+#######################################
+# Equilibration
+
+# TGNH for IL
+fix fTHERMO_IL gIL tgnvt/drude temp ${vTK} ${vTK} $(100.0*dt) ${vTDRUDE} $(20.0*dt)
+# direct and inverse transformation for graphene
+fix fTRAFO_G gGRAPHENE drude/transform/direct
+fix fTHERMO_G_C gGRAPHENE_CORES nvt temp ${vTK} ${vTK} $(100.0*dt)
+fix fTHERMO_G_D gGRAPHENE_DRUDES nvt temp ${vTDRUDE} ${vTDRUDE} $(20.0*dt)
+fix fINV_G gGRAPHENE drude/transform/inverse
+
+# dumping trajectory for equilibration
+dump dEQUI all custom 1000 equi.lammpstrj id type element xu yu zu
+dump_modify dEQUI element C C B F N C C C H H H D D D D D D D sort id
+
+# run 2 ns
+run 2000000
+write_restart after-equi.restart
+
+undump dEQUI
+
+#######################################
+# Production
+
+# trajectory
+dump dTRAJ all custom 500 traj.lammpstrj id type element xu yu zu
+dump_modify dTRAJ element C C B F N C C C H H H D D D D D D D sort id
+thermo 500
+
+# thermostating stays the same
+
+# run 1 ns
+run 1000000
+write_restart after-prod.restart
+
+#######################################
+# done
+
+undump dTRAJ
+unfix fINV_G
+unfix fTHERMO_G_D
+unfix fTHERMO_G_C
+unfix fTRAFO_G
+unfix fTHERMO_IL
+unfix fMOM_IL
+unfix fMOM_G
+unfix fWALL
+unfix fFREEZE
+unfix fSHAKE
+unfix fDRUDE
+
