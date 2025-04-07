@@ -1,0 +1,631 @@
+
+    -----------------------------------------------------------------------
+          Psi4: An Open-Source Ab Initio Electronic Structure Package
+                               Psi4 1.9 release
+
+                         Git: Rev {} zzzzzzz 
+
+
+    D. G. A. Smith, L. A. Burns, A. C. Simmonett, R. M. Parrish,
+    M. C. Schieber, R. Galvelis, P. Kraus, H. Kruse, R. Di Remigio,
+    A. Alenaizan, A. M. James, S. Lehtola, J. P. Misiewicz, M. Scheurer,
+    R. A. Shaw, J. B. Schriber, Y. Xie, Z. L. Glick, D. A. Sirianni,
+    J. S. O'Brien, J. M. Waldrop, A. Kumar, E. G. Hohenstein,
+    B. P. Pritchard, B. R. Brooks, H. F. Schaefer III, A. Yu. Sokolov,
+    K. Patkowski, A. E. DePrince III, U. Bozkaya, R. A. King,
+    F. A. Evangelista, J. M. Turney, T. D. Crawford, C. D. Sherrill,
+    J. Chem. Phys. 152(18) 184108 (2020). https://doi.org/10.1063/5.0006002
+
+                            Additional Code Authors
+    E. T. Seidl, C. L. Janssen, E. F. Valeev, M. L. Leininger,
+    J. F. Gonthier, R. M. Richard, H. R. McAlexander, M. Saitow, X. Wang,
+    P. Verma, M. H. Lechner, A. Jiang, S. Behnle, A. G. Heide,
+    M. F. Herbst, and D. L. Poole
+
+             Previous Authors, Complete List of Code Contributors,
+                       and Citations for Specific Modules
+    https://github.com/psi4/psi4/blob/master/codemeta.json
+    https://github.com/psi4/psi4/graphs/contributors
+    http://psicode.org/psi4manual/master/introduction.html#citing-psifour
+
+    -----------------------------------------------------------------------
+
+
+    Psi4 started on: Wednesday, 24 January 2024 09:23PM
+
+    Process ID: 2141296
+    Host:       n2cn1193
+    PSIDATADIR: /opt/software/pc2/EB-SW/software/PSI4/1.9-foss-2022a/share/psi4
+    Memory:     500.0 MiB
+    Threads:    1
+    
+  ==> Input File <==
+
+--------------------------------------------------------------------------
+# PSI4 input file for a GDMA calculation
+memory 3 GB
+
+molecule bf4 {
+# charge and multiplicity
+-1 1
+# coordinates
+B -0.00019775921889909396 0.00027427289843485157 3.4252470970245235e-05
+F 1.1231531389274233e-16 1.4305943048730027e-17 1.4128186388556467
+F 1.1478599870053965 0.6757812206519086 -0.47110657859818933
+F 0.011918061223755466 -1.332010791454871 -0.4709051045495349
+F -1.159665513775966 0.6560734964069324 -0.4708264470019934
+
+# additional options
+units angstrom
+no_reorient
+symmetry c1
+}
+
+# calculation options
+set {
+scf_type DF         # Density fitting, faster than exact integrals
+freeze_core True    # Freeze core electrons
+basis jun-cc-pVDZ   # Jun-cc-pVDZ basis set, recommended for sSAPT0 in https://doi.org/10.1063/1.4867135
+}
+
+# call gdma routine
+energy, wfn = energy('scf', return_wfn=True)
+fchk(wfn, filename='gdma.fchk')
+gdma(wfn, datafile='gdma.dma')
+print(variable('DMA DISTRIBUTED MULTIPOLES'))
+print(variable('DMA TOTAL MULTIPOLES'))
+--------------------------------------------------------------------------
+
+  Memory set to   2.794 GiB by Python driver.
+
+Scratch directory: /tmp/
+   => Libint2 <=
+
+    Primary   basis highest AM E, G, H:  5, 4, 3
+    Auxiliary basis highest AM E, G, H:  6, 5, 4
+    Onebody   basis highest AM E, G, H:  6, 5, 4
+    Solid Harmonics ordering:            gaussian
+
+*** tstart() called on n2cn1193
+*** at Wed Jan 24 21:23:30 2024
+
+   => Loading Basis Set <=
+
+    Name: JUN-CC-PVDZ
+    Role: ORBITAL
+    Keyword: BASIS
+    atoms 1   entry B          line   130 file /opt/software/pc2/EB-SW/software/PSI4/1.9-foss-2022a/share/psi4/basis/jun-cc-pvdz.gbs 
+    atoms 2-5 entry F          line   266 file /opt/software/pc2/EB-SW/software/PSI4/1.9-foss-2022a/share/psi4/basis/jun-cc-pvdz.gbs 
+
+
+         ---------------------------------------------------------
+                                   SCF
+               by Justin Turney, Rob Parrish, Andy Simmonett
+                          and Daniel G. A. Smith
+                              RHF Reference
+                        1 Threads,   2861 MiB Core
+         ---------------------------------------------------------
+
+  ==> Geometry <==
+
+    Molecular point group: c1
+    Full point group: C1
+
+    Geometry (in Angstrom), charge = -1, multiplicity = 1:
+
+       Center              X                  Y                   Z               Mass       
+    ------------   -----------------  -----------------  -----------------  -----------------
+         B           -0.000197308467     0.000273647749     0.000034174399    11.009305360000
+         F            0.000000450752    -0.000000625149     1.412818560784    18.998403162730
+         F            1.147860437757     0.675780595503    -0.471106656670    18.998403162730
+         F            0.011918511976    -1.332011416604    -0.470905182621    18.998403162730
+         F           -1.159665063024     0.656072871258    -0.470826525074    18.998403162730
+
+  Running in c1 symmetry.
+
+  Rotational constants: A =      0.16672  B =      0.16667  C =      0.16664 [cm^-1]
+  Rotational constants: A =   4998.17934  B =   4996.53615  C =   4995.88907 [MHz]
+  Nuclear repulsion =  178.879484031542972
+
+  Charge       = -1
+  Multiplicity = 1
+  Electrons    = 42
+  Nalpha       = 21
+  Nbeta        = 21
+
+  ==> Algorithm <==
+
+  SCF Algorithm Type is DF.
+  DIIS enabled.
+  MOM disabled.
+  Fractional occupation disabled.
+  Guess Type is SAD.
+  Energy threshold   = 1.00e-06
+  Density threshold  = 1.00e-06
+  Integral threshold = 1.00e-12
+
+  ==> Primary Basis <==
+
+  Basis Set: JUN-CC-PVDZ
+    Blend: JUN-CC-PVDZ
+    Number of shells: 40
+    Number of basis functions: 90
+    Number of Cartesian functions: 95
+    Spherical Harmonics?: true
+    Max angular momentum: 2
+
+   => Loading Basis Set <=
+
+    Name: (JUN-CC-PVDZ AUX)
+    Role: JKFIT
+    Keyword: DF_BASIS_SCF
+    atoms 1   entry B          line    90 file /opt/software/pc2/EB-SW/software/PSI4/1.9-foss-2022a/share/psi4/basis/jun-cc-pvdz-jkfit.gbs 
+    atoms 2-5 entry F          line   314 file /opt/software/pc2/EB-SW/software/PSI4/1.9-foss-2022a/share/psi4/basis/jun-cc-pvdz-jkfit.gbs 
+
+  ==> Integral Setup <==
+
+  DFHelper Memory: AOs need 0.026 GiB; user supplied 2.095 GiB. 
+  Using in-core AOs.
+
+  ==> MemDFJK: Density-Fitted J/K Matrices <==
+
+    J tasked:                   Yes
+    K tasked:                   Yes
+    wK tasked:                   No
+    OpenMP threads:               1
+    Memory [MiB]:              2145
+    Algorithm:                 Core
+    Schwarz Cutoff:           1E-12
+    Mask sparsity (%):       0.0000
+    Fitting Condition:        1E-10
+
+   => Auxiliary Basis Set <=
+
+  Basis Set: (JUN-CC-PVDZ AUX)
+    Blend: JUN-CC-PVDZ-JKFIT
+    Number of shells: 135
+    Number of basis functions: 395
+    Number of Cartesian functions: 455
+    Spherical Harmonics?: true
+    Max angular momentum: 3
+
+  Minimum eigenvalue in the overlap matrix is 1.5178336934E-03.
+  Reciprocal condition number of the overlap matrix is 2.1851595951E-04.
+    Using symmetric orthogonalization.
+
+  ==> Pre-Iterations <==
+
+  SCF Guess: Superposition of Atomic Densities via on-the-fly atomic UHF (no occupation information).
+
+   -------------------------
+    Irrep   Nso     Nmo    
+   -------------------------
+     A         90      90 
+   -------------------------
+    Total      90      90
+   -------------------------
+
+  ==> Iterations <==
+
+                           Total Energy        Delta E     RMS |[F,P]|
+
+   @DF-RHF iter SAD:  -421.23044450267162   -4.21230e+02   0.00000e+00 
+   @DF-RHF iter   1:  -422.64969025868862   -1.41925e+00   6.69842e-03 ADIIS/DIIS
+   @DF-RHF iter   2:  -422.73244736706226   -8.27571e-02   4.08176e-03 ADIIS/DIIS
+   @DF-RHF iter   3:  -422.77101415813331   -3.85668e-02   2.22024e-04 ADIIS/DIIS
+   @DF-RHF iter   4:  -422.77137825871046   -3.64101e-04   3.47159e-05 DIIS
+   @DF-RHF iter   5:  -422.77138690763320   -8.64892e-06   8.83351e-06 DIIS
+   @DF-RHF iter   6:  -422.77138745997399   -5.52341e-07   1.81231e-06 DIIS
+   @DF-RHF iter   7:  -422.77138748048969   -2.05157e-08   1.80413e-07 DIIS
+  Energy and wave function converged.
+
+
+  ==> Post-Iterations <==
+
+    Orbital Energies [Eh]
+    ---------------------
+
+    Doubly Occupied:                                                      
+
+       1A    -26.067094     2A    -26.067035     3A    -26.066996  
+       4A    -26.066905     5A     -7.539296     6A     -1.410962  
+       7A     -1.351248     8A     -1.351197     9A     -1.351059  
+      10A     -0.602243    11A     -0.528453    12A     -0.528425  
+      13A     -0.528365    14A     -0.447307    15A     -0.447265  
+      16A     -0.408466    17A     -0.408432    18A     -0.408370  
+      19A     -0.384997    20A     -0.384957    21A     -0.384909  
+
+    Virtual:                                                              
+
+      22A      0.183890    23A      0.183890    24A      0.183893  
+      25A      0.211756    26A      0.388558    27A      0.388608  
+      28A      0.388637    29A      0.451256    30A      0.451268  
+      31A      0.451281    32A      0.468989    33A      0.469000  
+      34A      0.479217    35A      0.522852    36A      0.523660  
+      37A      0.523669    38A      0.523681    39A      0.694556  
+      40A      0.694737    41A      0.694958    42A      0.732358  
+      43A      0.732380    44A      0.732381    45A      0.821746  
+      46A      0.919970    47A      0.920081    48A      0.920113  
+      49A      1.344200    50A      1.344302    51A      1.349154  
+      52A      1.629945    53A      1.630035    54A      1.630092  
+      55A      1.929530    56A      1.929621    57A      1.997559  
+      58A      1.997703    59A      1.997956    60A      2.025525  
+      61A      2.025561    62A      2.025665    63A      2.111043  
+      64A      2.134392    65A      2.134487    66A      2.134546  
+      67A      2.940488    68A      2.940629    69A      2.940680  
+      70A      3.263849    71A      4.172306    72A      4.172355  
+      73A      4.172388    74A      4.200089    75A      4.200091  
+      76A      4.200798    77A      4.200846    78A      4.200880  
+      79A      4.232473    80A      4.232490    81A      4.232502  
+      82A      4.447465    83A      4.447637    84A      4.447941  
+      85A      4.647061    86A      4.647120    87A      4.647209  
+      88A      4.748583    89A      4.784171    90A      4.784480  
+
+    Final Occupation by Irrep:
+              A 
+    DOCC [    21 ]
+    NA   [    21 ]
+    NB   [    21 ]
+
+  @DF-RHF Final Energy:  -422.77138748048969
+
+   => Energetics <=
+
+    Nuclear Repulsion Energy =            178.8794840315429724
+    One-Electron Energy =                -957.8337335882644084
+    Two-Electron Energy =                 356.1828620762316859
+    Total Energy =                       -422.7713874804896932
+
+Computation Completed
+
+
+Properties will be evaluated at   0.000000,   0.000000,   0.000000 [a0]
+
+Properties computed using the SCF density matrix
+
+
+ Multipole Moments:
+
+ ------------------------------------------------------------------------------------
+     Multipole            Electronic (a.u.)      Nuclear  (a.u.)        Total (a.u.)
+ ------------------------------------------------------------------------------------
+
+ L = 1.  Multiply by 2.5417464519 to convert [e a0] to [Debye]
+ Dipole X            :         -0.0007642            0.0000803           -0.0006839
+ Dipole Y            :          0.0012414           -0.0001114            0.0011300
+ Dipole Z            :          0.0003297           -0.0000139            0.0003158
+ Magnitude           :                                                    0.0013581
+
+ ------------------------------------------------------------------------------------
+
+*** tstop() called on n2cn1193 at Wed Jan 24 21:23:31 2024
+Module time:
+	user time   =       0.68 seconds =       0.01 minutes
+	system time =       0.05 seconds =       0.00 minutes
+	total time  =          1 seconds =       0.02 minutes
+Total time:
+	user time   =       0.68 seconds =       0.01 minutes
+	system time =       0.05 seconds =       0.00 minutes
+	total time  =          1 seconds =       0.02 minutes
+FCHKWriter: !WARNING! method 'HF'' renamed to label 'HF'.
+FCHKWriter: Writing gdma.fchk with label ' SCF Density'.
+                                     G D M A
+                                 by Anthony Stone
+
+               Distributed Multipoles from Gaussian wavefunctions
+
+                             version 2.3.3 (c2e0b548)
+              Compiled with mpifort on 24 January 2024 at 16:35:26
+
+Starting at 21:23:31 on 24 Jan 2024 
+
+GDMA calculation
+
+
+
+Using SCF density matrix from file gdma.fchk
+
+
+                         Distributed Multipole Analysis
+
+Standard DMA for products of primitives with exponent greater than 4.00000
+Using 80-point Euler-MacLaurin radial quadrature
+Using 590-point Lebedev quadrature
+Becke smoothing parameter = 3
+
+Positions and radii in angstrom
+Multipole moments in atomic units, ea_0^k for rank k
+
+B          x = -0.000197  y =  0.000274  z =  0.000034 angstrom
+           Maximum rank = 10   Radius =  0.650 angstrom
+                   Q00  =   0.630597
+|Q1| =   0.000052  Q10  =   0.000017  Q11c =  -0.000023  Q11s =   0.000044
+|Q2| =   0.000246  Q20  =   0.000101  Q21c =  -0.000080  Q21s =  -0.000053
+                   Q22c =   0.000163  Q22s =  -0.000121
+|Q3| =   0.476856  Q30  =   0.355464  Q31c =   0.000159  Q31s =  -0.000137
+                   Q32c =  -0.000380  Q32s =   0.000228  Q33c =  -0.008324
+                   Q33s =   0.317754
+|Q4| =   0.479709  Q40  =   0.244196  Q41c =   0.000353  Q41s =  -0.000408
+                   Q42c =   0.000108  Q42s =  -0.000016  Q43c =   0.010813
+                   Q43s =  -0.412761  Q44c =   0.000466  Q44s =   0.000321
+|Q5| =   0.000775  Q50  =  -0.000593  Q51c =  -0.000028  Q51s =   0.000204
+                   Q52c =  -0.000079  Q52s =  -0.000197  Q53c =   0.000004
+                   Q53s =  -0.000169  Q54c =   0.000070  Q54s =   0.000262
+                   Q55c =   0.000197  Q55s =  -0.000144
+|Q6| =   1.365275  Q60  =   0.857703  Q61c =  -0.000264  Q61s =   0.001036
+                   Q62c =   0.001123  Q62s =  -0.000662  Q63c =  -0.019186
+                   Q63s =   0.732587  Q64c =  -0.000418  Q64s =  -0.000311
+                   Q65c =   0.001016  Q65s =   0.001479  Q66c =  -0.767883
+                   Q66s =  -0.040250
+|Q7| =   0.840369  Q70  =  -0.513569  Q71c =  -0.002423  Q71s =   0.002752
+                   Q72c =  -0.000668  Q72s =   0.000719  Q73c =  -0.008303
+                   Q73s =   0.317721  Q74c =  -0.002011  Q74s =  -0.001244
+                   Q75c =  -0.001350  Q75s =  -0.001555  Q76c =  -0.583507
+                   Q76s =  -0.030571  Q77c =   0.001756  Q77s =  -0.002873
+|Q8| =   4.288673  Q80  =  -0.907435  Q81c =  -0.001310  Q81s =   0.000279
+                   Q82c =   0.002439  Q82s =   0.000576  Q83c =  -0.069769
+                   Q83s =   2.662567  Q84c =   0.004166  Q84s =   0.004937
+                   Q85c =  -0.002121  Q85s =   0.002050  Q86c =   3.232074
+                   Q86s =   0.169363  Q87c =  -0.005787  Q87s =   0.006083
+                   Q88c =  -0.000638  Q88s =  -0.005215
+|Q9| =  47.039292  Q90  = -24.352737  Q91c =  -0.014362  Q91s =   0.016583
+                   Q92c =  -0.020931  Q92s =   0.033567  Q93c =   0.688903
+                   Q93s = -26.337569  Q94c =   0.018733  Q94s =  -0.012615
+                   Q95c =   0.019942  Q95s =   0.024829  Q96c =  18.109337
+                   Q96s =   0.948383  Q97c =   0.004429  Q97s =   0.024129
+                   Q98c =  -0.063013  Q98s =   0.057366  Q99c =  -1.916923
+                   Q99s =  24.350842
+|QA| = 170.615159  QA0  =-110.978759  QA1c =  -0.045189  QA1s =  -0.032533
+                   QA2c =  -0.052874  QA2s =   0.028719  QA3c =  -0.518669
+                   QA3s =  19.685522  QA4c =  -0.025116  QA4s =  -0.034335
+                   QA5c =  -0.002111  QA5s =  -0.003330  QA6c = -76.701343
+                   QA6s =  -4.026140  QA7c =   0.037481  QA7s =   0.018327
+                   QA8c =  -0.137364  QA8s =   0.125841  QA9c =   8.045083
+                   QA9s =-102.183089  QAAc =   0.005638  QAAs =   0.029682
+
+F          x =  0.000000  y = -0.000001  z =  1.412819 angstrom
+           Maximum rank = 10   Radius =  0.650 angstrom
+                   Q00  =  -0.407569
+|Q1| =   0.335680  Q10  =  -0.335680  Q11c =  -0.000015  Q11s =   0.000018
+|Q2| =   0.643596  Q20  =   0.643596  Q21c =   0.000171  Q21s =  -0.000269
+                   Q22c =   0.000027  Q22s =  -0.000013
+|Q3| =   0.320524  Q30  =  -0.306841  Q31c =  -0.000089  Q31s =   0.000126
+                   Q32c =  -0.000074  Q32s =   0.000013  Q33c =   0.002426
+                   Q33s =  -0.092619
+|Q4| =   0.497469  Q40  =   0.056067  Q41c =  -0.000027  Q41s =   0.000288
+                   Q42c =  -0.000058  Q42s =   0.000030  Q43c =  -0.012944
+                   Q43s =   0.494130  Q44c =  -0.000074  Q44s =  -0.000031
+|Q5| =   1.397661  Q50  =   1.305823  Q51c =   0.000584  Q51s =  -0.000770
+                   Q52c =   0.000238  Q52s =   0.000244  Q53c =   0.013049
+                   Q53s =  -0.498108  Q54c =   0.000296  Q54s =   0.000309
+                   Q55c =  -0.000314  Q55s =  -0.000265
+|Q6| =   3.979296  Q60  =  -2.354398  Q61c =  -0.001073  Q61s =  -0.000657
+                   Q62c =   0.001015  Q62s =  -0.000714  Q63c =   0.081879
+                   Q63s =  -3.125665  Q64c =  -0.000524  Q64s =  -0.000989
+                   Q65c =   0.000167  Q65s =   0.000599  Q66c =   0.716733
+                   Q66s =   0.037574
+|Q7| =   6.899500  Q70  =  -1.876098  Q71c =   0.000280  Q71s =  -0.000429
+                   Q72c =  -0.000966  Q72s =  -0.002590  Q73c =  -0.169041
+                   Q73s =   6.453000  Q74c =   0.000129  Q74s =  -0.000608
+                   Q75c =   0.004345  Q75s =   0.002692  Q76c =   1.551426
+                   Q76s =   0.081361  Q77c =   0.002088  Q77s =  -0.000571
+|Q8| =  23.879076  Q80  =   4.020522  Q81c =   0.006358  Q81s =   0.003914
+                   Q82c =  -0.013938  Q82s =   0.011534  Q83c =  -0.537687
+                   Q83s =  20.524817  Q84c =   0.013476  Q84s =   0.013624
+                   Q85c =   0.001002  Q85s =  -0.004017  Q86c = -11.494511
+                   Q86s =  -0.602745  Q87c =   0.001593  Q87s =   0.000022
+                   Q88c =  -0.015248  Q88s =   0.019146
+|Q9| = 111.651876  Q90  = -73.556266  Q91c =  -0.113168  Q91s =   0.127112
+                   Q92c =  -0.036925  Q92s =   0.021753  Q93c =   0.449534
+                   Q93s = -17.169504  Q94c =  -0.064801  Q94s =  -0.039312
+                   Q95c =  -0.016850  Q95s =  -0.029222  Q96c = -46.988470
+                   Q96s =  -2.462668  Q97c =  -0.023333  Q97s =   0.013493
+                   Q98c =  -0.005821  Q98s =   0.030820  Q99c =   5.291630
+                   Q99s = -67.220543
+|QA| = 424.405014  QA0  = 266.905753  QA1c =   0.322473  QA1s =  -0.123133
+                   QA2c =   0.012605  QA2s =  -0.001385  QA3c =   0.433217
+                   QA3s = -16.447323  QA4c =  -0.512062  QA4s =  -0.115267
+                   QA5c =  -0.493362  QA5s =  -0.350601  QA6c =-174.906387
+                   QA6s =  -9.185055  QA7c =  -0.004728  QA7s =  -0.276655
+                   QA8c =   0.269668  QA8s =  -0.336646  QA9c =  21.914072
+                   QA9s =-278.302590  QAAc =   0.023314  QAAs =  -0.201763
+
+F          x =  1.147860  y =  0.675781  z = -0.471107 angstrom
+           Maximum rank = 10   Radius =  0.650 angstrom
+                   Q00  =  -0.407657
+|Q1| =   0.335642  Q10  =   0.111921  Q11c =  -0.272681  Q11s =  -0.160543
+|Q2| =   0.643532  Q20  =  -0.214411  Q21c =  -0.302023  Q21s =  -0.177700
+                   Q22c =   0.240663  Q22s =   0.432951
+|Q3| =   0.320466  Q30  =  -0.186331  Q31c =   0.044913  Q31s =   0.026320
+                   Q32c =   0.056602  Q32s =   0.102017  Q33c =   0.005596
+                   Q33s =  -0.227216
+|Q4| =   0.497508  Q40  =  -0.288069  Q41c =   0.165763  Q41s =   0.097757
+                   Q42c =  -0.018795  Q42s =  -0.033785  Q43c =  -0.007197
+                   Q43s =   0.290511  Q44c =  -0.108332  Q44s =   0.172679
+|Q5| =   1.397323  Q50  =  -0.434895  Q51c =   0.122709  Q51s =   0.072246
+                   Q52c =   0.299955  Q52s =   0.539971  Q53c =  -0.004852
+                   Q53s =   0.166692  Q54c =   0.553282  Q54s =  -0.887660
+                   Q55c =  -0.433461  Q55s =   0.227593
+|Q6| =   3.980301  Q60  =  -2.200536  Q61c =   0.060721  Q61s =   0.036634
+                   Q62c =   0.607230  Q62s =   1.094214  Q63c =   0.039510
+                   Q63s =  -1.507146  Q64c =  -0.573743  Q64s =   0.920473
+                   Q65c =   0.195274  Q65s =  -0.102522  Q66c =   2.432065
+                   Q66s =   0.127632
+|Q7| =   6.901458  Q70  =  -1.422582  Q71c =   1.708027  Q71s =   1.003324
+                   Q72c =   1.291123  Q72s =   2.317910  Q73c =   0.021156
+                   Q73s =  -0.889721  Q74c =   0.252622  Q74s =  -0.404204
+                   Q75c =   4.264417  Q75s =  -2.220944  Q76c =  -2.833884
+                   Q76s =  -0.145112  Q77c =  -1.305003  Q77s =  -0.866357
+|Q8| =  23.891175  Q80  =  -2.238775  Q81c = -12.514201  Q81s =  -7.361963
+                   Q82c =   3.380893  Q82s =   6.087379  Q83c =   0.114194
+                   Q83s =  -4.231455  Q84c =   0.282828  Q84s =  -0.451075
+                   Q85c =  -5.437904  Q85s =   2.832895  Q86c =   7.031871
+                   Q86s =   0.353531  Q87c =  -5.940889  Q87s =  -3.902432
+                   Q88c =  -5.385258  Q88s = -11.026861
+|Q9| = 111.662760  Q90  =  28.240053  Q91c =  48.867142  Q91s =  28.777369
+                   Q92c =  19.113982  Q92s =  34.404962  Q93c =  -0.303470
+                   Q93s =   9.784089  Q94c =  -3.686068  Q94s =   5.868316
+                   Q95c = -42.961735  Q95s =  22.452806  Q96c =  12.876142
+                   Q96s =   0.596914  Q97c = -15.336914  Q97s = -10.110715
+                   Q98c = -26.224510  Q98s = -53.581484  Q99c =  -1.338293
+                   Q99s =  18.657895
+|QA| = 424.156133  QA0  =-150.539843  QA1c =  37.687562  QA1s =  22.754921
+                   QA2c = -98.743353  QA2s =-177.399527  QA3c =  -0.200819
+                   QA3s =  16.501317  QA4c =-102.579749  QA4s = 163.541017
+                   QA5c = -13.193189  QA5s =   6.852707  QA6c =  15.611641
+                   QA6s =   0.537702  QA7c = -84.251157  QA7s = -56.154979
+                   QA8c = -90.213958  QA8s =-183.451551  QA9c =  -1.982023
+                   QA9s =  35.681409  QAAc =  87.086452  QAAs =-123.189912
+
+F          x =  0.011919  y = -1.332011  z = -0.470905 angstrom
+           Maximum rank = 10   Radius =  0.650 angstrom
+                   Q00  =  -0.407831
+|Q1| =   0.335589  Q10  =   0.111857  Q11c =  -0.002810  Q11s =   0.316386
+|Q2| =   0.643421  Q20  =  -0.214521  Q21c =  -0.003197  Q21s =   0.350151
+                   Q22c =  -0.495251  Q22s =  -0.009086
+|Q3| =   0.320370  Q30  =  -0.186231  Q31c =   0.000531  Q31s =  -0.052210
+                   Q32c =  -0.116603  Q32s =  -0.002076  Q33c =   0.006229
+                   Q33s =  -0.227133
+|Q4| =   0.497649  Q40  =  -0.288154  Q41c =   0.001589  Q41s =  -0.192802
+                   Q42c =   0.038579  Q42s =   0.000709  Q43c =  -0.007970
+                   Q43s =   0.290299  Q44c =   0.203895  Q44s =   0.006931
+|Q5| =   1.396951  Q50  =  -0.434804  Q51c =   0.001435  Q51s =  -0.143506
+                   Q52c =  -0.617374  Q52s =  -0.011261  Q53c =  -0.003975
+                   Q53s =   0.166230  Q54c =  -1.045102  Q54s =  -0.037535
+                   Q55c =   0.022653  Q55s =  -0.488603
+|Q6| =   3.983437  Q60  =  -2.202291  Q61c =  -0.000119  Q61s =  -0.072881
+                   Q62c =  -1.251756  Q62s =  -0.021663  Q63c =   0.039313
+                   Q63s =  -1.509139  Q64c =   1.083886  Q64s =   0.039104
+                   Q65c =  -0.010260  Q65s =   0.220176  Q66c =   2.434069
+                   Q66s =   0.127891
+|Q7| =   6.905318  Q70  =  -1.421693  Q71c =   0.019554  Q71s =  -1.984627
+                   Q72c =  -2.653232  Q72s =  -0.053010  Q73c =   0.024064
+                   Q73s =  -0.892924  Q74c =  -0.476813  Q74s =  -0.017464
+                   Q75c =  -0.211351  Q75s =   4.804404  Q76c =  -2.835521
+                   Q76s =  -0.152063  Q77c =  -0.093179  Q77s =   1.567204
+|Q8| =  23.923937  Q80  =  -2.265534  Q81c =  -0.133601  Q81s =  14.526794
+                   Q82c =  -6.991007  Q82s =  -0.120304  Q83c =   0.118590
+                   Q83s =  -4.240571  Q84c =  -0.540372  Q84s =  -0.013685
+                   Q85c =   0.271510  Q85s =  -6.138343  Q86c =   7.026773
+                   Q86s =   0.386560  Q87c =  -0.454298  Q87s =   7.087528
+                   Q88c =  12.268984  Q88s =   0.868235
+|Q9| = 111.681754  Q90  =  28.294088  Q91c =   0.508359  Q91s = -56.732686
+                   Q92c = -39.343156  Q92s =  -0.732062  Q93c =  -0.255569
+                   Q93s =   9.782927  Q94c =   6.963301  Q94s =   0.246470
+                   Q95c =   2.144649  Q95s = -48.396075  Q96c =  12.888194
+                   Q96s =   0.721543  Q97c =  -1.173733  Q97s =  18.424836
+                   Q98c =  59.477216  Q98s =   4.196670  Q99c =  -1.530702
+                   Q99s =  18.679167
+|QA| = 423.682509  QA0  =-150.803785  QA1c =  -0.115003  QA1s = -43.512340
+                   QA2c = 202.679710  QA2s =   3.938964  QA3c =  -0.535946
+                   QA3s =  16.661294  QA4c = 192.752774  QA4s =   6.310187
+                   QA5c =   0.765828  QA5s = -14.721257  QA6c =  15.405401
+                   QA6s =   0.969360  QA7c =  -5.752203  QA7s = 101.191423
+                   QA8c = 203.694836  QA8s =  14.934409  QA9c =  -3.279741
+                   QA9s =  35.467302  QAAc =-149.790751  QAAs = -12.525799
+
+F          x = -1.159665  y =  0.656073  z = -0.470827 angstrom
+           Maximum rank = 10   Radius =  0.650 angstrom
+                   Q00  =  -0.407540
+|Q1| =   0.335632  Q10  =   0.111859  Q11c =   0.275429  Q11s =  -0.155805
+|Q2| =   0.643571  Q20  =  -0.214552  Q21c =   0.304861  Q21s =  -0.172438
+                   Q22c =   0.255314  Q22s =  -0.424607
+|Q3| =   0.320496  Q30  =  -0.186374  Q31c =  -0.045459  Q31s =   0.025671
+                   Q32c =   0.060036  Q32s =  -0.099901  Q33c =   0.006029
+                   Q33s =  -0.227236
+|Q4| =   0.497289  Q40  =  -0.287924  Q41c =  -0.167535  Q41s =   0.094791
+                   Q42c =  -0.019827  Q42s =   0.032947  Q43c =  -0.007659
+                   Q43s =   0.290549  Q44c =  -0.095656  Q44s =  -0.179547
+|Q5| =   1.396987  Q50  =  -0.434940  Q51c =  -0.124329  Q51s =   0.070518
+                   Q52c =   0.318204  Q52s =  -0.529399  Q53c =  -0.004228
+                   Q53s =   0.165460  Q54c =   0.490818  Q54s =   0.923484
+                   Q55c =   0.412366  Q55s =   0.263223
+|Q6| =   3.975978  Q60  =  -2.198863  Q61c =  -0.063171  Q61s =   0.035715
+                   Q62c =   0.644814  Q62s =  -1.071555  Q63c =   0.039658
+                   Q63s =  -1.506323  Q64c =  -0.508724  Q64s =  -0.956825
+                   Q65c =  -0.186905  Q65s =  -0.119224  Q66c =   2.427751
+                   Q66s =   0.126901
+|Q7| =   6.900123  Q70  =  -1.420727  Q71c =  -1.727167  Q71s =   0.977009
+                   Q72c =   1.365513  Q72s =  -2.275056  Q73c =   0.024838
+                   Q73s =  -0.895294  Q74c =   0.223394  Q74s =   0.418517
+                   Q75c =  -4.047974  Q75s =  -2.578507  Q76c =  -2.837198
+                   Q76s =  -0.148873  Q77c =   1.409991  Q77s =  -0.702228
+|Q8| =  23.839028  Q80  =  -2.234076  Q81c =  12.615865  Q81s =  -7.135381
+                   Q82c =   3.593357  Q82s =  -5.964605  Q83c =   0.099404
+                   Q83s =  -4.213558  Q84c =   0.232563  Q84s =   0.448377
+                   Q85c =   5.157094  Q85s =   3.285202  Q86c =   7.010064
+                   Q86s =   0.364201  Q87c =   6.395872  Q87s =  -3.184682
+                   Q88c =  -6.823945  Q88s =  10.121722
+|Q9| = 111.700873  Q90  =  28.269071  Q91c = -49.375750  Q91s =  27.938432
+                   Q92c =  20.240817  Q92s = -33.701276  Q93c =  -0.205734
+                   Q93s =   9.745629  Q94c =  -3.256314  Q94s =  -6.090719
+                   Q95c =  40.928893  Q95s =  26.132106  Q96c =  12.866438
+                   Q96s =   0.714815  Q97c =  16.372753  Q97s =  -8.172052
+                   Q98c = -33.415629  Q98s =  49.446874  Q99c =  -1.545049
+                   Q99s =  18.662406
+|QA| = 424.749681  QA0  =-150.705235  QA1c = -38.575090  QA1s =  21.783912
+                   QA2c =-104.775269  QA2s = 174.349767  QA3c =  -0.611596
+                   QA3s =  16.592517  QA4c = -90.592496  QA4s =-170.573966
+                   QA5c =  12.367454  QA5s =   7.667862  QA6c =  16.194648
+                   QA6s =   0.919287  QA7c =  90.801536  QA7s = -45.133401
+                   QA8c =-114.420967  QA8s = 169.716030  QA9c =  -3.266120
+                   QA9s =  37.113941  QAAc =  63.789458  QAAs = 136.653157
+
+Total multipoles referred to origin at
+           x =   0.000000,  y =    0.000000,  z =    0.000000 angstrom
+                   Q00  =  -1.000000
+|Q1| =   0.001358  Q10  =   0.000316  Q11c =  -0.000684  Q11s =   0.001130
+|Q2| =   0.003370  Q20  =   0.001625  Q21c =   0.001629  Q21s =  -0.000995
+                   Q22c =  -0.000268  Q22s =   0.002236
+|Q3| =  29.852194  Q30  = -22.248030  Q31c =  -0.003647  Q31s =  -0.001928
+                   Q32c =   0.000054  Q32s =  -0.000752  Q33c =   0.521226
+                   Q33s = -19.897410
+|Q4| =  43.709640  Q40  = -22.249364  Q41c =   0.007778  Q41s =  -0.007048
+                   Q42c =   0.002394  Q42s =  -0.014522  Q43c =  -0.985225
+                   Q43s =  37.610204  Q44c =  -0.000530  Q44s =   0.003106
+|Q5| =   0.072399  Q50  =   0.037257  Q51c =   0.039287  Q51s =  -0.032312
+                   Q52c =   0.002863  Q52s =   0.018591  Q53c =  -0.000206
+                   Q53s =   0.008398  Q54c =  -0.007775  Q54s =  -0.007060
+                   Q55c =  -0.026013  Q55s =   0.007391
+|Q6| =  34.713484  Q60  = -21.762837  Q61c =   0.038057  Q61s =  -0.086381
+                   Q62c =  -0.053687  Q62s =   0.030107  Q63c =   0.488636
+                   Q63s = -18.654229  Q64c =  -0.018460  Q64s =  -0.018349
+                   Q65c =  -0.052278  Q65s =  -0.127386  Q66c =  19.547463
+                   Q66s =   1.024797
+|Q7| = 534.344907  Q70  = 327.119533  Q71c =   0.395694  Q71s =  -0.328556
+                   Q72c =  -0.083135  Q72s =   0.226197  Q73c =   5.283094
+                   Q73s =-201.686296  Q74c =   0.255093  Q74s =   0.239001
+                   Q75c =   0.033834  Q75s =   0.269836  Q76c = 370.719843
+                   Q76s =  19.435674  Q77c =  -0.567942  Q77s =   0.479198
+|Q8| =  1.229E+03  Q80  =  2.616E+02  Q81c =  1.330E-01  Q81s = -1.858E+00
+                   Q82c =  1.136E+00  Q82s = -6.278E-01  Q83c =  1.996E+01
+                   Q83s = -7.619E+02  Q84c = -3.828E-01  Q84s = -1.383E+00
+                   Q85c =  2.249E+00  Q85s =  1.455E+00  Q86c = -9.270E+02
+                   Q86s = -4.860E+01  Q87c =  3.012E+00  Q87s = -2.119E+00
+                   Q88c = -2.860E+00  Q88s =  3.146E+00
+|Q9| =  1.397E+04  Q90  =  7.235E+03  Q91c =  5.453E+00  Q91s = -6.431E+00
+                   Q92c = -1.795E+00  Q92s = -4.615E+00  Q93c = -2.050E+02
+                   Q93s =  7.824E+03  Q94c = -1.915E+00  Q94s =  3.899E+00
+                   Q95c = -6.468E+00  Q95s = -8.570E+00  Q96c = -5.381E+03
+                   Q96s = -2.821E+02  Q97c = -8.145E+00  Q97s =  2.260E+00
+                   Q98c =  1.650E+01  Q98s = -1.657E+01  Q99c =  5.695E+02
+                   Q99s = -7.233E+03
+|QA| =  6.954E+04  QA0  =  4.520E+04  QA1c =  3.058E+01  QA1s = -1.111E+01
+                   QA2c = -1.548E+01  QA2s =  2.727E+01  QA3c =  2.107E+02
+                   QA3s = -8.043E+03  QA4c =  5.817E+00  QA4s =  4.366E+00
+                   QA5c = -2.098E+01  QA5s =  3.767E+00  QA6c =  3.128E+04
+                   QA6s =  1.640E+03  QA7c =  2.710E+00  QA7s =  1.304E+01
+                   QA8c = -3.707E+01  QA8s =  2.213E+01  QA9c = -3.280E+03
+                   QA9s =  4.166E+04  QAAc = -2.458E+01  QAAs = -2.733E+01
+
+Finished at 21:23:38 on 24 Jan 2024 
+
+  DMA results are available in the Python driver through the commands:
+  variable('DMA DISTRIBUTED MULTIPOLES')
+  variable('DMA TOTAL MULTIPOLES')
+
+
+    Psi4 stopped on: Wednesday, 24 January 2024 09:23PM
+    Psi4 wall time for execution: 0:00:11.92
+
+*** Psi4 exiting successfully. Buy a developer a beer!

@@ -1,0 +1,56 @@
+# created by fftool
+
+units real
+boundary p p p
+
+atom_style full
+bond_style harmonic
+angle_style harmonic
+dihedral_style opls
+
+special_bonds lj/coul 0.0 0.0 0.5
+
+comm_modify vel yes             # store velocities of ghost atoms
+
+pair_style hybrid/overlay lj/cut/coul/long 15.0 15.0  thole 1.139 10.0
+pair_modify tail yes
+kspace_style pppm 1.0e-5
+
+read_data data-p.lmp extra/special/per/atom 50
+
+include pair.lmp
+include pair-drude.lmp
+
+group ATOMS type 1 2 3 4
+group CORES type 3
+group DRUDES type 5
+group BF4 type 1 2
+group CC type 3 4 5
+
+# parameters all set
+# now, compute energy and forces
+
+# identify each atom type [C]ore, [D]rude, [N]on-polarizable
+# should be called before any other fix drude
+fix drudes all drude N N C N D
+
+# atoms should stay in place
+fix inplace ATOMS setforce 0.0 0.0 0.0
+# zero linear momentum (may not be needed)
+fix icecube all momentum 10 linear 1 1 1
+
+# perform energy minimization
+minimize 1.0e-6 1.0e-8 1000 10000
+
+# write final configuration
+write_data after-minimize.lmp
+
+# calculate the energy
+compute energy CC group/group BF4 kspace yes
+
+# print the energy
+thermo_style custom step etotal c_energy
+thermo 1
+
+run 1
+

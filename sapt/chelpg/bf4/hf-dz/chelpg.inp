@@ -1,0 +1,9 @@
+! RIJCOSX CHELPG autoaux TIGHTSCF HF
+%basis
+ GTOName "jun-cc-pvdz.basis"
+end
+%maxcore 3000
+%pal
+ nprocs 16
+end
+*xyzfile -1 1 opt_aligned.xyz

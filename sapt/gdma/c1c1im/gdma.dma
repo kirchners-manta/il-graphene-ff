@@ -1,0 +1,9 @@
+title "GDMA calculation"
+file gdma.fchk
+
+angstrom
+multipoles
+switch 4.0        # use modified GDMA instead of original DMA
+limit 3           # calculate Multipoles up to 3rd order for ALL atoms
+radius H 0.325
+start

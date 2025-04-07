@@ -1,0 +1,32 @@
+# PSI4 input file for a GDMA calculation
+memory 3 GB
+
+molecule bf4 {
+# charge and multiplicity
+-1 1
+# coordinates
+B -0.00019775921889909396 0.00027427289843485157 3.4252470970245235e-05
+F 1.1231531389274233e-16 1.4305943048730027e-17 1.4128186388556467
+F 1.1478599870053965 0.6757812206519086 -0.47110657859818933
+F 0.011918061223755466 -1.332010791454871 -0.4709051045495349
+F -1.159665513775966 0.6560734964069324 -0.4708264470019934
+
+# additional options
+units angstrom
+no_reorient
+symmetry c1
+}
+
+# calculation options
+set {
+scf_type DF         # Density fitting, faster than exact integrals
+freeze_core True    # Freeze core electrons
+basis jun-cc-pVDZ   # Jun-cc-pVDZ basis set, recommended for sSAPT0 in https://doi.org/10.1063/1.4867135
+}
+
+# call gdma routine
+energy, wfn = energy('scf', return_wfn=True)
+fchk(wfn, filename='gdma.fchk')
+gdma(wfn, datafile='gdma.dma')
+print(variable('DMA DISTRIBUTED MULTIPOLES'))
+print(variable('DMA TOTAL MULTIPOLES'))
