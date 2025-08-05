@@ -1,6 +1,6 @@
 # il-graphene-ff
 
-LAMMPS input files related to our paper on a polarizable force field for the IL/graphite interface (currently under review at *J. Phys. Chem. B*).
+LAMMPS input files related to our paper on a polarizable force field for the IL/graphite interface (published at [*J. Phys. Chem. B*](https://doi.org/10.1021/acs.jpcb.5c02352)).
 The repository is structured as follows:
 1. [SAPT Calculations and LJ Parameters](./sapt): contains the input and output files of the SAPT calculations used to determine the interaction energy between the IL and graphite.
 There are four subdirectories for the interaction energies between cicrumcoronene (`cc`)/dicircumcoronene (`dc`) and the IL cation (`c1c1im`) and anion (`bf4`), denoted by the components and separated by a dash (e.g., `cc-c1c1im`).
@@ -24,3 +24,7 @@ General note: As outlined in the paper, multiple replica simulations were perfor
 In this repository, we only provide the input files for one of the replicas. The other replicas can be generated using the same input files by changing the random seed in the LAMMPS input file.
 
 If further information is needed, please refer to the paper or contact us directly.
+
+**Reference**
+
+ T. Frömbgen, R. P. Misra, S. Luo, A. Sam, B. Kirchner, D. Blankschtein, Formulation of Polarizable Force Fields to Model Simple Ionic Liquid/Graphite Interfaces, *J. Phys. Chem. B* (**2025**), DOI: [10.1021/acs.jpcb.5c02352](https://doi.org/10.1021/acs.jpcb.5c02352)
